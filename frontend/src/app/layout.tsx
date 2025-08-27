@@ -35,7 +35,7 @@ export default function RootLayout({
           </main>
           <footer className="border-t border-[--color-border] py-6 text-center text-xs text-gray-500">
             <div className="mx-auto max-w-6xl px-4 md:px-8">
-              Hecho con ❤️ para chatear con tus documentos
+              Hecho con ❤️ por Rafael Rodriguez para chatear con tus documentos
             </div>
           </footer>
         </div>
