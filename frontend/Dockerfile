@@ -7,6 +7,7 @@ RUN npm ci
 
 COPY . .
 
+# Usar build legacy para evitar problemas de SSR
 RUN npm run build
 
 EXPOSE 3000

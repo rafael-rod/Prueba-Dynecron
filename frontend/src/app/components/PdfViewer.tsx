@@ -1,11 +1,15 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react'; // Importar useMemo y useEffect
-import { Document, Page, pdfjs } from 'react-pdf';
+import { useState, useMemo, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Importar react-pdf dinámicamente para evitar problemas de SSR
+const Document = dynamic(() => import('react-pdf').then(mod => mod.Document), { ssr: false });
+const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), { ssr: false });
+
+// Importar estilos
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface PdfViewerProps {
   fileHex: string;
@@ -25,6 +29,16 @@ const hexToArrayBuffer = (hex: string) => {
 export function PdfViewer({ fileHex, pageNumber, textPosition, onClose }: PdfViewerProps) {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isClient, setIsClient] = useState(false);
+
+  // Asegurar que estamos en el cliente
+  useEffect(() => {
+    setIsClient(true);
+    // Configurar el worker de PDF solo en el cliente
+    import('react-pdf').then(({ pdfjs }) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+    });
+  }, []);
 
   // *** CORRECCIÓN 1: Memoizar el objeto 'file' para evitar re-renders innecesarios ***
   const fileData = useMemo(() => ({
@@ -115,6 +129,25 @@ export function PdfViewer({ fileHex, pageNumber, textPosition, onClose }: PdfVie
       (textElement as HTMLElement).style.border = '2px solid yellow';
     });
   };
+
+  // No renderizar nada hasta que estemos en el cliente
+  if (!isClient) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div className="bg-gray-800 rounded-lg shadow-2xl w-full h-full max-w-6xl max-h-[90vh] flex flex-col">
+          <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <h2 className="text-xl font-bold">Visor de PDF</h2>
+            </div>
+            <button onClick={onClose} className="text-2xl font-bold text-white hover:text-gray-300">&times;</button>
+          </div>
+          <div className="flex-grow flex items-center justify-center">
+            <p className="text-gray-300">Cargando visor de PDF...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
