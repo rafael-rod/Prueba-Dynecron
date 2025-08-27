@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Message, SearchResult, QAResponse, Citation, Chat, ChatMessage } from '@/lib/types';
 import { PdfViewer } from './PdfViewer';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ export function ChatInterface() {
   const currentSessionId = currentChat?.session_id;
   const hasSession = Boolean(currentSessionId);
 
-  const loadChats = async () => {
+  const loadChats = useCallback(async () => {
     try {
       const res = await fetch('http://127.0.0.1:8000/chats');
       const data: Chat[] = await res.json();
@@ -39,7 +39,7 @@ export function ChatInterface() {
     } catch (e) {
       console.error('Error cargando chats', e);
     }
-  };
+  }, [activeChatId]);
 
   const loadMessages = async (chatId: number) => {
     try {
@@ -62,7 +62,7 @@ export function ChatInterface() {
     const files = localStorage.getItem('indexedFiles');
     if (files) setIndexedFiles(JSON.parse(files));
     loadChats();
-  }, []);
+  }, [loadChats]);
 
   useEffect(() => {
     if (activeChatId != null) loadMessages(activeChatId);
@@ -166,9 +166,10 @@ export function ChatInterface() {
         const botMsg: Message = { sender: 'bot', text: data.answer, qaResponse: data };
         await appendMessage(botMsg);
       }
-    } catch (err: any) {
-      setError(err.message);
-      const botErr: Message = { sender: 'bot', text: `Lo siento, ocurrió un error: ${err.message}` };
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+      setError(errorMessage);
+      const botErr: Message = { sender: 'bot', text: `Lo siento, ocurrió un error: ${errorMessage}` };
       await appendMessage(botErr);
     } finally {
       setIsLoading(false);
@@ -206,10 +207,11 @@ export function ChatInterface() {
       });
   };
 
-  const deriveTitle = (msgs: Message[], fallback: string) => {
-    const firstUser = msgs.find(m => m.sender === 'user');
-    return firstUser ? (firstUser.text.length > 40 ? firstUser.text.slice(0, 40) + '…' : firstUser.text) : fallback;
-  };
+  // Función para derivar título del chat (no utilizada actualmente)
+  // const deriveTitle = (msgs: Message[], fallback: string) => {
+  //   const firstUser = msgs.find(m => m.sender === 'user');
+  //   return firstUser ? (firstUser.text.length > 40 ? firstUser.text.slice(0, 40) + '…' : firstUser.text) : fallback;
+  // };
 
   const createSession = () => {
     router.push('/')
@@ -289,7 +291,7 @@ export function ChatInterface() {
                           className="bg-[--color-card] p-3 rounded-lg border border-[--color-border] cursor-pointer hover:border-[--color-primary] transition-colors"
                           onClick={() => handleSearchResultClick(res)}
                         >
-                          <p className="text-sm text-gray-700 dark:text-gray-200 italic">"{res.text}"</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-200 italic">&ldquo;{res.text}&rdquo;</p>
                           <p className="text-xs text-right mt-2 text-[--color-primary]">
                             Fuente: {res.document_name} (Relevancia: {res.score})
                             {res.page_number && ` - Página ${res.page_number}`}

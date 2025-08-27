@@ -139,7 +139,7 @@ export function PdfViewer({ fileHex, pageNumber, textPosition, onClose }: PdfVie
                   pageNumber={index + 1} 
                   renderTextLayer={true}
                   width={Math.min(800, window.innerWidth - 100)}
-                  onRenderSuccess={(page) => {
+                  onRenderSuccess={() => {
                     // Resaltar texto si estamos en la página correcta y tenemos posición
                     if (pageNumber && (index + 1) === pageNumber && textPosition) {
                       setTimeout(() => {

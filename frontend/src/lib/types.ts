@@ -43,6 +43,6 @@ export interface ChatMessage {
   chat_id: number;
   sender: 'user' | 'bot';
   text: string;
-  payload_json?: any;
+  payload_json?: Record<string, unknown>;
   created_at: string;
 }

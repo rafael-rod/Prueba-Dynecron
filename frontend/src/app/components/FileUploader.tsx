@@ -74,8 +74,9 @@ export function FileUploader() {
       localStorage.setItem('indexedFiles', JSON.stringify(fileNames));
 
       router.push('/chat');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

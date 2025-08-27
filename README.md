@@ -5,8 +5,10 @@ Este proyecto implementa un sistema de Retrieval-Augmented Generation (RAG) con 
 ## Ejecutar con Docker
 
 ### Prerrequisitos
-- Docker
-- Docker Compose
+- Docker Desktop (incluye Docker Compose)
+  - Descarga desde: https://www.docker.com/products/docker-desktop/
+  - Instala y reinicia tu computadora
+  - Asegúrate de que Docker Desktop esté ejecutándose
 
 ### Instrucciones
 
@@ -15,7 +17,7 @@ Este proyecto implementa un sistema de Retrieval-Augmented Generation (RAG) con 
 3. Ejecuta el comando:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 4. Abre tu navegador y ve a:
@@ -25,13 +27,13 @@ docker-compose up
 ### Detener los servicios
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Reconstruir las imágenes
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Estructura del Proyecto

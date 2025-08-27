@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,8 +26,8 @@ export default function RootLayout({
                 <span className="text-sm font-semibold tracking-wide">Dynecron Docs</span>
               </div>
               <nav className="hidden md:flex items-center gap-6 text-sm text-gray-400">
-                <a href="/" className="hover:text-[--color-foreground]">Inicio</a>
-                <a href="/chat" className="hover:text-[--color-foreground]">Chats</a>
+                <Link href="/" className="hover:text-[--color-foreground]">Inicio</Link>
+                <Link href="/chat" className="hover:text-[--color-foreground]">Chats</Link>
               </nav>
             </div>
           </header>
