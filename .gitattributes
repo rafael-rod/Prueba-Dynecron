@@ -1,0 +1,3 @@
+frontend/**/*.ts linguist-language=TypeScript
+frontend/**/*.tsx linguist-language=TypeScript
+backend/**/*.py linguist-language=Python
