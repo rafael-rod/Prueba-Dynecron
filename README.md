@@ -12,7 +12,7 @@ Este proyecto implementa un sistema de Retrieval-Augmented Generation (RAG) que 
 - **Docker & Docker Compose** para la contenedorización y despliegue.
 - **Scikit-learn** para el procesamiento e indexación de textos.
 - **PDF.js (react-pdf)** para la visualización de documentos en el navegador.
-- Manejo de persistencia en archivos: índices guardados en formatos `.json` y `.pkl`.
+- Manejo de persistencia en archivos: índices guardados en formato `.pkl`.
 - Validaciones robustas de archivos en el frontend ([FileUploader](frontend/src/app/components/FileUploader.tsx)).
 
 ## Estructura del Proyecto
@@ -67,6 +67,8 @@ Aquí se incluirá un gif demostrativo del funcionamiento del sistema:
 
 ![Demo](./Dynecron_New_GIF.gif)
 
+## Tiempo Invertido
+Invertí un total de 8 horas aproximadamente en este proyecto.
 
 ## Referencias y Citas
 
