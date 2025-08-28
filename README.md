@@ -80,7 +80,6 @@ visor es exclusivo de pdf. En próximas actualizaciones se añadirá soporte par
 - Revisa search_engine.py para entender la lógica del indexado y búsqueda utilizando TF-IDF.
 - La configuración de la API de Google se realiza en config.py.
 
-Estas citas son clicables y te llevarán directamente al texto original dentro del repositorio.
 
 ## Conclusión
 
