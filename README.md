@@ -70,6 +70,10 @@ Aquí se incluirá un gif demostrativo del funcionamiento del sistema:
 ## Tiempo Invertido
 Invertí un total de 8 horas aproximadamente en este proyecto.
 
+## Nota
+La visualización de documentos (al abrir las citas) solo funciona con archivos .pdf por el momento, no con .txt, ya que el
+visor es exclusivo de pdf. En próximas actualizaciones se añadirá soporte para .txt.
+
 ## Referencias y Citas
 
 - Consulta document_processor.py para ver cómo se extrae y se divide el texto de los documentos.
